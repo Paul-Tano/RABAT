@@ -66,24 +66,22 @@ export default function MovieGrid({ movies: initialMovies, totalPages: initialTo
   }
 
   // Filtrage côté client
-  const filteredMovies = movies.filter((movie) => {
-    const year = new Date(movie.releaseDate).getFullYear().toString()
-    const matchGenre = activeFilters.genre
-      ? movie.genre.toLowerCase().includes(activeFilters.genre.toLowerCase())
-      : true
-    const matchYear = activeFilters.year ? year === activeFilters.year : true
-    const matchDirector = activeFilters.director
-      ? movie.director.toLowerCase().includes(activeFilters.director.toLowerCase())
-      : true
-    
-    // Filtre par recherche (titre OU réalisateur)
-    const matchSearch = finalSearchQuery
-      ? movie.title.toLowerCase().includes(finalSearchQuery.toLowerCase()) ||
-        movie.director.toLowerCase().includes(finalSearchQuery.toLowerCase())
-      : true
+ const filteredMovies = movies.filter((movie) => {
+  const year = new Date(movie.releaseDate).getFullYear().toString()
+  const matchGenre = activeFilters.genre
+    ? movie.genre?.toLowerCase().includes(activeFilters.genre.toLowerCase())
+    : true
+  const matchYear = activeFilters.year ? year === activeFilters.year : true
+  const matchDirector = activeFilters.director
+    ? movie.director?.toLowerCase().includes(activeFilters.director.toLowerCase())
+    : true
+  const matchSearch = finalSearchQuery
+    ? movie.title?.toLowerCase().includes(finalSearchQuery.toLowerCase()) ||
+      movie.director?.toLowerCase().includes(finalSearchQuery.toLowerCase())
+    : true
 
-    return matchGenre && matchYear && matchDirector && matchSearch
-  })
+  return matchGenre && matchYear && matchDirector && matchSearch
+})
 
   return (
     <main className="max-w-7xl mx-auto px-6 mt-12 space-y-8">
@@ -142,7 +140,7 @@ export default function MovieGrid({ movies: initialMovies, totalPages: initialTo
               <div className="relative aspect-[3/4] w-full bg-zinc-800 overflow-hidden">
                 <img
                   src={movie.poster || "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500"}
-                  alt={movie.title}
+                  alt={movie.title || "Affiche non disponible"}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
