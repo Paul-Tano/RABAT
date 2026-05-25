@@ -1,10 +1,10 @@
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
+import { prisma } from "@/lib/prisma"
 import Navbar from "./components/Navbar"
 import MovieGrid from "./components/MovieGrid"
 import { Play, Info } from "lucide-react"
 import Link from "next/link"
-
 
 interface HomeProps {
   searchParams: Promise<{ search?: string }>
@@ -14,19 +14,16 @@ export default async function HomePage({ searchParams }: HomeProps) {
   const session = await getServerSession(authOptions)
   const { search } = await searchParams
 
-  let movies = []
-  let totalPages = 1
+  const [movies, total] = await Promise.all([
+    prisma.movie.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 16,
+      include: { ratings: true }
+    }),
+    prisma.movie.count()
+  ])
 
-  try {
-    const res = await fetch("http://localhost:3000/api/movies?page=1&limit=16", {
-      cache: "no-store"
-    })
-    const data = await res.json()
-    movies = data.movies
-    totalPages = data.totalPages
-  } catch (error) {
-    console.error("Erreur lors de la récupération des films")
-  }
+  const totalPages = Math.ceil(total / 16)
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans pb-12">

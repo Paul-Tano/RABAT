@@ -1,14 +1,14 @@
 export interface Movie {
   id: number
   tmdbId: number
-  title: string
-  description: string
-  poster: string
-  trailer?: string
-  director: string
-  genre: string
-  releaseDate: string
-  createdAt: string
+  title: string | null
+  description: string | null
+  poster: string | null
+  trailer?: string | null
+  director: string | null
+  genre: string | null
+  releaseDate: string | Date
+  createdAt: string | Date
   ratings: any[]
 }
 export interface TmdbMovie {
