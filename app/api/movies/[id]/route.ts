@@ -5,16 +5,14 @@ import { authOptions } from "@/lib/auth"
 
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const id = parseInt(params.id)
+        const { id: paramId } = await params
+        const id = parseInt(paramId)
 
         if (isNaN(id)) {
-            return NextResponse.json(
-                { error: "ID invalide" },
-                { status: 400 }
-            )
+            return NextResponse.json({ error: "ID invalide" }, { status: 400 })
         }
 
         const movie = await prisma.movie.findUnique({
@@ -24,10 +22,7 @@ export async function GET(
                 comments: {
                     include: {
                         user: {
-                            select: {
-                                id: true,
-                                username: true
-                            }
+                            select: { id: true, username: true }
                         }
                     },
                     orderBy: { createdAt: "desc" }
@@ -37,20 +32,15 @@ export async function GET(
         })
 
         if (!movie) {
-            return NextResponse.json(
-                { error: "Film non trouvé" },
-                { status: 404 }
-            )
+            return NextResponse.json({ error: "Film non trouvé" }, { status: 404 })
         }
+
         return NextResponse.json(movie, { status: 200 })
+
     } catch (error) {
-        return NextResponse.json(
-            { error: "Erreur serveur" },
-            { status: 500 }
-        )
+        return NextResponse.json({ error: "Erreur serveur" }, { status: 500 })
     }
 }
-
 export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
