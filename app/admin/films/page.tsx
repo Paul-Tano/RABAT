@@ -132,8 +132,8 @@ const handleDelete = async (id: number) => {
                   <tr key={movie.id} className="hover:bg-zinc-800/30 transition-colors">
                     <td className="px-5 py-4">
                       <img 
-                        src={movie.poster} 
-                        alt={movie.title}
+                        src={movie.poster ?? undefined}
+                        alt={movie.title ?? undefined}
                         className="w-12 h-16 object-cover rounded"
                       />
                     </td>
