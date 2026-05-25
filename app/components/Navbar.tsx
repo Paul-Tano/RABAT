@@ -87,6 +87,16 @@ const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
                 <div className="absolute right-0 top-full mt-2 w-52 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
                   <div className="px-4 py-2 border-b border-zinc-800/60 mb-1">
                     <p className="text-sm font-bold text-white truncate">{session.user.username}</p>
+                    {session.user.role === "ADMIN" && (
+  <Link
+    href="/admin"
+    onClick={() => setIsMenuOpen(false)}
+    className="flex items-center gap-3 px-4 py-2.5 text-sm text-amber-400 hover:text-amber-300 hover:bg-zinc-800/50 transition-colors"
+  >
+    <LayoutDashboard size={16} />
+    Dashboard
+  </Link>
+)}
                   </div>
                   <Link
                     href="/profile"

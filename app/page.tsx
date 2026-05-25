@@ -50,14 +50,14 @@ export default async function HomePage({ searchParams }: HomeProps) {
           </p>
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
-            {movies[0]?.trailer && (
-              <a href={movies[0].trailer} target="_blank" rel="noopener noreferrer">
-                <button className="flex items-center gap-2 px-6 py-3 bg-white hover:bg-zinc-200 text-zinc-950 font-bold rounded-xl text-sm transition-all cursor-pointer shadow-lg">
-                  <Play size={16} fill="currentColor" />
-                  Visionner la bande-annonce
-                </button>
-              </a>
-            )}
+           {movies[0]?.trailer && movies[0].trailer.trim() !== "" && (
+            <a href={movies[0].trailer} target="_blank" rel="noopener noreferrer">
+              <button className="flex items-center gap-2 px-6 py-3 bg-white hover:bg-zinc-200 text-zinc-950 font-bold rounded-xl text-sm transition-all cursor-pointer shadow-lg">
+                <Play size={16} fill="currentColor" />
+                Visionner la bande-annonce
+              </button>
+            </a>
+          )}
             <Link href={`/movies/${movies[0]?.id}`}>
               <button className="flex items-center gap-2 px-5 py-3 bg-zinc-800/80 hover:bg-zinc-700/80 border border-zinc-700 text-zinc-200 font-bold rounded-xl text-sm transition-all cursor-pointer">
                 <Info size={16} />

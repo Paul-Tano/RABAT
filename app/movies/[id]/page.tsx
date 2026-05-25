@@ -80,17 +80,16 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
               className="w-full h-full object-cover"
             />
           </div>
-          {movie.trailer && (
-            <a
-              href={movie.trailer}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full max-w-[260px] md:max-w-none inline-flex items-center justify-center gap-2 bg-zinc-900/60 hover:bg-zinc-800 text-zinc-300 border border-zinc-900 font-semibold py-3 px-4 rounded-xl transition-all text-sm"
-            >
-              <Tv size={16} className="text-red-500" />
-              Regarder la bande-annonce
-            </a>
-          )}
+          {movie.trailer && movie.trailer.trim() !== "" && (
+          <a href={movie.trailer}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full max-w-[260px] md:max-w-none inline-flex items-center justify-center gap-2 bg-zinc-900/60 hover:bg-zinc-800 text-zinc-300 border border-zinc-900 font-semibold py-3 px-4 rounded-xl transition-all text-sm"
+          >
+            <Tv size={16} className="text-red-500" />
+            Regarder la bande-annonce
+          </a>
+        )}
           <div className="w-full max-w-[260px] md:max-w-none">
             <MovieActions
               movieId={movie.id}
