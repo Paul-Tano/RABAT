@@ -4,7 +4,7 @@ import { z } from "zod";
 
 
 const commentCreateSchema = z.object({
-    content: z.string().min(1, "Le commentaire ne peut pas être vide").max(1000, "Commentaire trop long (1000 caractères max)"),
+    content: z.string().trim().min(1, "Le commentaire ne peut pas être vide").max(1000, "Commentaire trop long (1000 caractères max)"),
     movieId: z.number({ message: "L'ID du film doit être un nombre" }),
     userId: z.number({ message: "L'ID de l'utilisateur doit être un nombre" })
 });

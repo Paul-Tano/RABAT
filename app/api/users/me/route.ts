@@ -6,10 +6,10 @@ import { z } from "zod"
 import bcrypt from "bcryptjs"
 
 const updateMeSchema = z.object({
-    username: z.string().min(3, "Le username doit faire au moins 3 caractères").optional(),
-    email: z.email("Email invalide").optional(),
-    currentPassword: z.string().optional(),
-    newPassword: z.string().min(8, "Le mot de passe doit faire au moins 8 caractères").optional()
+    username: z.string().trim().min(3, "Le username doit faire au moins 3 caractères").optional(),
+    email: z.string().trim().min(1, "L'email est requis").email("Email invalide").optional(),
+    currentPassword: z.string().trim().min(1, "Le mot de passe actuel ne peut pas être vide").optional(),
+    newPassword: z.string().trim().min(8, "Le mot de passe doit faire au moins 8 caractères").optional()
 }).refine(
     (data) => {
         if (data.newPassword && !data.currentPassword) return false

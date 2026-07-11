@@ -4,9 +4,9 @@ import bcrypt from "bcryptjs"
 import { z } from "zod"
 
 const registerSchema = z.object({
-    username: z.string().min(3, "Le username doit faire au moins 3 caractères"),
-    email: z.email("Email invalide"),
-    password: z.string().min(8, "Le mot de passe doit faire au moins 8 caractères")
+    username: z.string().trim().min(3, "Le username doit faire au moins 3 caractères"),
+    email: z.string().trim().min(1, "L'email est requis").email("Email invalide"),
+    password: z.string().trim().min(8, "Le mot de passe doit faire au moins 8 caractères")
 })
 export async function POST(request: NextRequest) {
     try {

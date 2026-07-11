@@ -99,25 +99,25 @@ export const authOptions: NextAuthOptions = {
                 token.role = (user as any).role
                 token.username = (user as any).username
             }
-            if (token.email && !token.role) {
-                const dbUser = await prisma.user.findUnique({
-                    where: { email: token.email }
-                })
-                if (dbUser) {
-                    token.id = String(dbUser.id)
-                    token.role = dbUser.role
-                    token.username = dbUser.username
-                }
-            }
-
             return token
         },
 
         async session({ session, token }) {
             if (token) {
                 session.user.id = token.id as string
-                session.user.role = token.role as string
                 session.user.username = token.username as string
+                if (token.email) {
+                    const dbUser = await prisma.user.findUnique({
+                        where: { email: token.email }
+                    })
+                    if (dbUser && dbUser.is_active) {
+                        session.user.role = dbUser.role
+                    } else {
+                        session.user.role = "SUSPENDED"
+                    }
+                } else {
+                    session.user.role = token.role as string
+                }
             }
             return session
         }

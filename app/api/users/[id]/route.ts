@@ -5,8 +5,8 @@ import { authOptions } from "@/lib/auth"
 import { z } from "zod"
 
 const updateUserSchema = z.object({
-    username: z.string().min(3).optional(),
-    email: z.email("Email invalide").optional(),
+    username: z.string().trim().min(3).optional(),
+    email: z.string().trim().min(1, "L'email est requis").email("Email invalide").optional(),
     role: z.enum(["USER", "ADMIN"]).optional(),
     is_active: z.boolean().optional()
 })
